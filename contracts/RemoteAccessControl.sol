@@ -42,14 +42,14 @@ abstract contract RemoteAccessControl is IRemoteAccessControl {
         remoteAccessControl = newAddress;
     }
 
-    function roleGranted(bytes32 role, address target, bool isSingleton) public override onlyAccessControl {
+    function roleGranted(bytes32 role, address target, bool isSingleton) public override virtual onlyAccessControl {
         if (isSingleton)
             singletons[role] = target;
         else
             transients[role].add(target);
     }
 
-    function roleRevoked(bytes32 role, address target) public override onlyAccessControl {
+    function roleRevoked(bytes32 role, address target) public override virtual onlyAccessControl {
         transients[role].remove(target);
     }
 
